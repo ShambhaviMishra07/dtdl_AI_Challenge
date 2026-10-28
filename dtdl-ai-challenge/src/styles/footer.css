@@ -1,0 +1,131 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 5rem) 14px 14px;
+  background: var(--bg-2); 
+  transition: background-color 0.45s ease;
+}
+
+/* Soft ambient light behind the panel, so the glass blur has something to blur */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 70% at 20% 100%, var(--glow-a), transparent 70%),
+    radial-gradient(40% 60% at 85% 90%, var(--glow-b), transparent 70%);
+}
+
+.footer__panel {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 3vw, 2.25rem) 1.25rem;
+  border-radius: 22px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: background-color 0.45s ease, border-color 0.45s ease;
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .footer__panel {
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+  }
+}
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .footer__panel {
+    background: var(--surface); /* solid fallback, same as the navbar */
+  }
+}
+
+.footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.footer__brand {
+  max-width: 22rem;
+}
+.footer__tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  color: var(--text-2);
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
+}
+.footer__desc {
+  margin-top: 0.9rem;
+  font-size: 0.95rem;
+  color: var(--text-2);
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+.footer__nav a {
+  position: relative;
+  padding: 8px 14px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-2);
+  transition: color 0.25s ease;
+}
+/* same sliding magenta underline as the navbar links */
+.footer__nav a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.footer__nav a:hover,
+.footer__nav a:focus-visible {
+  color: var(--text);
+}
+.footer__nav a:hover::after,
+.footer__nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.1rem;
+}
+.footer__copy {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+.footer__top-btn {
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .footer { padding-inline: 10px; }
+  .footer__nav { margin-inline: -14px; }
+  .footer__bottom { align-items: flex-start; }
+}
